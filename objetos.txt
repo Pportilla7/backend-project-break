@@ -1,0 +1,39 @@
+Objeto BIEN
+{
+    "nombre": "Camiseta Azul",
+    "categoria": "camisetas",
+    "genero": "hombre",
+    "precio": 19.99,
+    "taman": "M",
+    "cantidad": 50,
+    "imageUrl": "image.jpg"
+}
+
+{
+    "nombre": "Camiseta Azul",
+    "categoria": "camisetas",
+    "genero": "hombre",
+    "precio": 19.99,
+    "taman": "L",
+    "cantidad": 50,
+    "imageUrl": "image.jpg"
+}
+
+{
+    "nombre": "Camiseta VERDE",
+    "categoria": "camisetas",
+    "genero": "hombre",
+    "precio": 29.99,
+    "taman": "M",
+    "cantidad": 50,
+    "imageUrl": "image2.jpg"
+}
+
+OBJETO CON ERRORES
+{
+    "nombre": "Camiseta Azul",
+    "categoria": "camisetas",
+    "genero": "hombre",
+    "cantidad": 50,
+    "imageUrl": "image.jpg"
+}
