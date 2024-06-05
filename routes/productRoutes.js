@@ -61,4 +61,14 @@ router.put('/update/:id', async(req, res)=>{
     }
 })
 
+router.delete('/delete', async(req, res)=>{
+    try{
+        await Producto.deleteMany()
+        res.status(200).send('Todas las prendas se ha borrado.')
+    }
+    catch{
+        res.status(400).send('Error: No se ha podido borra la base de datos');
+    }
+})
+
 module.exports={router};
