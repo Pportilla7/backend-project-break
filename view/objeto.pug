@@ -1,0 +1,47 @@
+//- objeto.pug
+doctype html
+html
+  body
+    if Array.isArray(productos)
+      each producto in productos
+        p
+          strong Referencia:
+          |  #{producto._id}
+        p
+          strong Descripción:
+          |  #{producto.descripcion}
+        p
+          strong Categoría:
+          |  #{producto.categoria}
+        p
+          strong Precio:
+          |  #{producto.precio}
+        p
+          strong Tamaño:
+          |  #{producto.talla}
+        if conEnlace
+          a(href=`/products/${producto._id}`)
+            img(src=producto.imagen, alt=producto.nombre)
+        else
+          img(src=producto.imagen, alt=producto.nombre)
+    else
+      p
+        strong Referencia:
+        |  #{producto._id}
+      p
+        strong Descripción:
+        |  #{producto.descripcion}
+      p
+        strong Categoría:
+        |  #{producto.categoria}
+      p
+        strong Precio:
+        |  #{producto.precio}
+      p
+        strong Tamaño:
+        |  #{producto.talla}
+      if conEnlace
+        a(href=`/products/${producto._id}`)
+          img(src=producto.imagen, alt=producto.nombre)
+      else
+        img(src=producto.imagen, alt=producto.nombre)

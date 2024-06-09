@@ -5,11 +5,11 @@ html(lang="es")
     meta(charset="UTF-8")
     title Subir Nuevo Artículo
   body
-    h1 Subir Nuevo Artículo
+    h1= title 
     form(action="/dashboard" method="POST")
       div
         label(for="nombre") Nombre:
-        input(type="text" id="nombre" name="nombre" required)
+        input(type="text" id="nombre" name="nombre" required value=title)
       div
         label(for="descripcion") Descripción:
         textarea(id="descripcion" name="descripcion" required)
