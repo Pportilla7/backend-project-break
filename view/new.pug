@@ -1,0 +1,37 @@
+//- views/new.pug
+doctype html
+html(lang="es")
+  head
+    meta(charset="UTF-8")
+    title Subir Nuevo Artículo
+  body
+    h1 Subir Nuevo Artículo
+    form(action="/dashboard" method="POST")
+      div
+        label(for="nombre") Nombre:
+        input(type="text" id="nombre" name="nombre" required)
+      div
+        label(for="descripcion") Descripción:
+        textarea(id="descripcion" name="descripcion" required)
+      div
+        label(for="imagen") Imagen:
+        input(type="file" id="imagen" name="imagen" required)
+      div
+        label(for="categoria") Categoría:
+        select(id="categoria" name="categoria" required)
+          option(value="Camisetas") Camisetas
+          option(value="Pantalones") Pantalones
+          option(value="Zapatos") Zapatos
+          option(value="Accesorios") Accesorios
+      div
+        label(for="talla") Talla:
+        select(id="talla" name="talla" required)
+          option(value="XS") XS
+          option(value="S") S
+          option(value="M") M
+          option(value="L") L
+          option(value="XL") XL
+      div
+        label(for="precio") Precio:
+        input(type="number" id="precio" name="precio" required)
+      button(type="submit") Subir Artículo

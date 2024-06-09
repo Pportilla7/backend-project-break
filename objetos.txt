@@ -1,22 +1,22 @@
 Objeto BIEN
 {
-    "nombre": "Camiseta Azul",
+    "nombre": "Camiseta Manchester City",
     "categoria": "camisetas",
     "genero": "hombre",
-    "precio": 19.99,
+    "precio": 99.99,
     "taman": "M",
     "cantidad": 50,
-    "imageUrl": "image.jpg"
+    "imageUrl": "https://shop.mancity.com/dw/image/v2/BDWJ_PRD/on/demandware.static/-/Sites-master-catalog-MAN/default/dw887b23ea/images/large/701230876001_pp_01_mcfc.png?sw=400&sh=400&sm=fit"
 }
 
 {
-    "nombre": "Camiseta Azul",
+    "nombre": "Camiseta Manchester United",
     "categoria": "camisetas",
     "genero": "hombre",
-    "precio": 19.99,
+    "precio": 109.99,
     "taman": "L",
     "cantidad": 50,
-    "imageUrl": "image.jpg"
+    "imageUrl": "https://imbictoz.com/wp-content/uploads/2022/07/Camiseta-Manchester-United-Primera-Equipacion-2022-2023-Version-Jugador.jpg"
 }
 
 {
