@@ -38,5 +38,32 @@ async function showProductById(req ,res){
     }
 }
 
+async function showEditProduct(req ,res){
+    try{
+        const id=req.params.id
+        const producto=await Producto.findById(id);
+        console.log(producto)
+        res.render('new', {producto, title:'Edita objeto'})
+    }catch (error) {
+        console.error('Error al mostrar el producto:', error);
+        throw new Error('Error al mostrar el producto');
+    }
+}
 
-module.exports = {showProducts, showProductById, createProduct};
+async function updateProduct(req, res){
+    try{
+        console.log('Entro en updateProduct');
+        const id=req.params.id;
+        const producto = req.body;
+        console.log(producto);
+        const productoUpdated=await Producto.findByIdAndUpdate(id, producto);
+        console.log(productoUpdated);
+        res.render('objeto', {productoUpdated, conEnlace:false});
+    }catch(error){
+        console.error('Error al mostrar el producto:', error);
+        throw new Error('Error al mostrar el producto');
+    }
+}
+
+
+module.exports = {showProducts, showProductById, createProduct, showEditProduct, updateProduct};

@@ -3,35 +3,67 @@ doctype html
 html(lang="es")
   head
     meta(charset="UTF-8")
-    title Subir Nuevo Artículo
+    title= title
   body
-    h1= title 
-    form(action="/dashboard" method="POST")
-      div
-        label(for="nombre") Nombre:
-        input(type="text" id="nombre" name="nombre" required value=title)
-      div
-        label(for="descripcion") Descripción:
-        textarea(id="descripcion" name="descripcion" required)
-      div
-        label(for="imagen") Imagen:
-        input(type="file" id="imagen" name="imagen" required)
-      div
-        label(for="categoria") Categoría:
-        select(id="categoria" name="categoria" required)
-          option(value="Camisetas") Camisetas
-          option(value="Pantalones") Pantalones
-          option(value="Zapatos") Zapatos
-          option(value="Accesorios") Accesorios
-      div
-        label(for="talla") Talla:
-        select(id="talla" name="talla" required)
-          option(value="XS") XS
-          option(value="S") S
-          option(value="M") M
-          option(value="L") L
-          option(value="XL") XL
-      div
-        label(for="precio") Precio:
-        input(type="number" id="precio" name="precio" required)
-      button(type="submit") Subir Artículo
+    h1= title
+    
+    if producto
+      form(action=`/dashboard/${producto._id}` method="PUT")
+        div
+          label(for="nombre") Nombre:
+          input(type="text" id="nombre" name="nombre" required value=producto.nombre)
+        div
+          label(for="descripcion") Descripción:
+          textarea(id="descripcion" name="descripcion" required)= producto.descripcion
+        div
+          label(for="imagen") Imagen:
+          input(type="file" id="imagen" name="imagen" required)
+        div
+          label(for="categoria") Categoría:
+          select(id="categoria" name="categoria" required)
+            option(value="Camisetas" selected=(producto.categoria === 'Camisetas')) Camisetas
+            option(value="Pantalones" selected=(producto.categoria === 'Pantalones')) Pantalones
+            option(value="Zapatos" selected=(producto.categoria === 'Zapatos')) Zapatos
+            option(value="Accesorios" selected=(producto.categoria === 'Accesorios')) Accesorios
+        div
+          label(for="talla") Talla:
+          select(id="talla" name="talla" required)
+            option(value="XS" selected=(producto.talla === 'XS')) XS
+            option(value="S" selected=(producto.talla === 'S')) S
+            option(value="M" selected=(producto.talla === 'M')) M
+            option(value="L" selected=(producto.talla === 'L')) L
+            option(value="XL" selected=(producto.talla === 'XL')) XL
+        div
+          label(for="precio") Precio:
+          input(type="number" id="precio" name="precio" required value=producto.precio)
+        button(type="submit") Actualizar artículo
+    else
+      form(action="/dashboard" method="POST")
+        div
+          label(for="nombre") Nombre:
+          input(type="text" id="nombre" name="nombre" required)
+        div
+          label(for="descripcion") Descripción:
+          textarea(id="descripcion" name="descripcion" required)
+        div
+          label(for="imagen") Imagen:
+          input(type="file" id="imagen" name="imagen" required)
+        div
+          label(for="categoria") Categoría:
+          select(id="categoria" name="categoria" required)
+            option(value="Camisetas") Camisetas
+            option(value="Pantalones") Pantalones
+            option(value="Zapatos") Zapatos
+            option(value="Accesorios") Accesorios
+        div
+          label(for="talla") Talla:
+          select(id="talla" name="talla" required)
+            option(value="XS") XS
+            option(value="S") S
+            option(value="M") M
+            option(value="L") L
+            option(value="XL") XL
+        div
+          label(for="precio") Precio:
+          input(type="number" id="precio" name="precio" required)
+        button(type="submit") Crear artículo
