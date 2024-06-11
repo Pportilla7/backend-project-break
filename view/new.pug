@@ -3,7 +3,9 @@ html(lang="es")
   head
     meta(charset="UTF-8")
     title= title
+    link(rel="stylesheet" href="/public/styles.css")
   body
+    include nav.pug
     if producto
       h1= title
       form(action=`/dashboard/${producto._id}` method="PUT")

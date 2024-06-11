@@ -10,10 +10,15 @@ async function createProduct(req, res){
         res.redirect(`/dashboard/${producto_mongoose._id}`);
     }
     catch (error) {
-        console.error('Error al guardar el producto:', error);
-        throw new Error('Error al guardar el producto');
+        next(error);
     }
 }
+
+function showNewProduct(req, res){
+    res.render('new',{title:'Nuevo producto'});
+}
+
+
 
 async function showProducts(req, res){
     try{
@@ -24,8 +29,7 @@ async function showProducts(req, res){
         const productos=await Producto.find();
         res.render('objeto', {productos, conEnlace:Enlace})
     }catch (error) {
-        console.error('Error al mostrar el producto:', error);
-        throw new Error('Error al mostrar el producto');
+        next(error);
     }
 }
 
@@ -40,8 +44,7 @@ async function showProductById(req ,res){
         const producto=await Producto.findById(id_obj);
         res.render('objeto', {producto, conEnlace:false})
     }catch (error) {
-        console.error('Error al mostrar el producto:', error);
-        throw new Error('Error al mostrar el producto');
+        next(error);
     }
 }
 
@@ -55,8 +58,7 @@ async function showEditProduct(req ,res){
         console.log(producto)
         res.render('new', {producto, title:'Edita objeto'})
     }catch (error) {
-        console.error('Error al mostrar el producto:', error);
-        throw new Error('Error al mostrar el producto');
+        next(error);
     }
 }
 
@@ -78,8 +80,7 @@ async function updateProduct(req, res) {
 
         res.render('objeto', {productoUpdated, conEnlace: false });
     } catch (error) {
-        console.error('Error al actualizar el producto:', error);
-        res.status(500).send('Error al actualizar el producto');
+        next(error);
     }
 }
 
@@ -97,10 +98,9 @@ async function deleteProduct(req, res) {
         
         res.redirect('/dashboard');
     } catch (error) {
-        console.error('Error al eliminar el producto:', error);
-        res.status(500).send('Error al eliminar el producto');
+        next(error);
     }
 }
 
 
-module.exports = {showProducts, showProductById, createProduct, showEditProduct, updateProduct, deleteProduct};
+module.exports = {showProducts, showProductById, createProduct, showEditProduct, updateProduct, deleteProduct, showNewProduct};

@@ -126,7 +126,7 @@ Las funciones principales del controlador serán:
 
 -+ showProducts: Devuelve la vista con todos los productos.
 -+ showProductById: Devuelve la vista con el detalle de un producto.
-- showNewProduct: Devuelve la vista con el formulario para subir un artículo nuevo.
+-+ showNewProduct: Devuelve la vista con el formulario para subir un artículo nuevo.
 -+ createProduct: Crea un nuevo producto. Una vez creado, redirige a la vista de detalle del producto o a la vista de todos los productos del dashboard.
 -+ showEditProduct: Devuelve la vista con el formulario para editar un producto.
 -+ updateProduct: Actualiza un producto. Una vez actualizado, redirige a la vista de detalle del producto o a la vista de todos los productos del dashboard.

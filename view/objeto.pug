@@ -1,9 +1,37 @@
 //- objeto.pug
 doctype html
-html
+html(lang="es")
+  head
+    meta(charset="UTF-8")
+    title Productos
+    link(rel="stylesheet" href="./public/styles.css")
   body
+    include nav.pug
     if Array.isArray(productos)
       each producto in productos
+        div.producto
+          p
+            strong Referencia:
+            |  #{producto._id}
+          p
+            strong Descripción:
+            |  #{producto.descripcion}
+          p
+            strong Categoría:
+            |  #{producto.categoria}
+          p
+            strong Precio:
+            |  #{producto.precio}
+          p
+            strong Tamaño:
+            |  #{producto.talla}
+          if conEnlace
+            a(href=`/products/${producto._id}`)
+              img(src=producto.imagen, alt=producto.nombre)
+          else
+            img(src=producto.imagen, alt=producto.nombre)
+    else
+      div.producto
         p
           strong Referencia:
           |  #{producto._id}
@@ -24,24 +52,3 @@ html
             img(src=producto.imagen, alt=producto.nombre)
         else
           img(src=producto.imagen, alt=producto.nombre)
-    else
-      p
-        strong Referencia:
-        |  #{producto._id}
-      p
-        strong Descripción:
-        |  #{producto.descripcion}
-      p
-        strong Categoría:
-        |  #{producto.categoria}
-      p
-        strong Precio:
-        |  #{producto.precio}
-      p
-        strong Tamaño:
-        |  #{producto.talla}
-      if conEnlace
-        a(href=`/products/${producto._id}`)
-          img(src=producto.imagen, alt=producto.nombre)
-      else
-        img(src=producto.imagen, alt=producto.nombre)
