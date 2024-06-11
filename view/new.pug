@@ -1,4 +1,3 @@
-//- views/new.pug
 doctype html
 html(lang="es")
   head
@@ -16,7 +15,7 @@ html(lang="es")
           textarea(id="descripcion" name="descripcion" required)= producto.descripcion
         div
           label(for="imagen") Imagen:
-          input(type="file" id="imagen" name="imagen" required)
+          input(type="file" id="imagen" name="imagen")
         div
           label(for="categoria") Categoría:
           select(id="categoria" name="categoria" required)

@@ -31,6 +31,7 @@ async function showProducts(req, res){
 
 async function showProductById(req ,res){
     try{
+        console.log('Entró en showProductById');
         const id=req.params.id;
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).send('ID inválido');
@@ -59,24 +60,47 @@ async function showEditProduct(req ,res){
     }
 }
 
-async function updateProduct(req, res){
-    try{
-        console.log('Entro en updateProduct');
-        const id=req.params.id;
+async function updateProduct(req, res) {
+    try {
+        console.log('Entró en updateProduct');
+        const id = req.params.id;
+
+        const producto = req.body;
+        console.log(producto);
+
+        const productoUpdated = await Producto.findByIdAndUpdate(id, producto, { new: true });
+        
+        if (!productoUpdated) {
+            return res.status(404).send('Producto no encontrado');
+        }
+
+        console.log(productoUpdated);
+
+        res.render('objeto', {productoUpdated, conEnlace: false });
+    } catch (error) {
+        console.error('Error al actualizar el producto:', error);
+        res.status(500).send('Error al actualizar el producto');
+    }
+}
+
+async function deleteProduct(req, res) {
+    try {
+        console.log('Entro en deleteProduct');
+        const id = req.params.id;
+
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).send('ID inválido');
         }
-        const id_obj=new ObjectId(id);
-        const producto = req.body;
-        console.log(producto);
-        const productoUpdated=await Producto.findByIdAndUpdate(id_obj, producto);
-        console.log(productoUpdated);
-        res.render('objeto', {productoUpdated, conEnlace:false});
-    }catch(error){
-        console.error('Error al mostrar el producto:', error);
-        throw new Error('Error al mostrar el producto');
+
+        const id_obj = new mongoose.Types.ObjectId(id);
+        await Producto.findByIdAndDelete(id_obj);
+        
+        res.redirect('/dashboard');
+    } catch (error) {
+        console.error('Error al eliminar el producto:', error);
+        res.status(500).send('Error al eliminar el producto');
     }
 }
 
 
-module.exports = {showProducts, showProductById, createProduct, showEditProduct, updateProduct};
+module.exports = {showProducts, showProductById, createProduct, showEditProduct, updateProduct, deleteProduct};

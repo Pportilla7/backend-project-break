@@ -1,9 +1,7 @@
 const express= require('express');
 const router=express.Router();
 
-const {showProducts, showProductById,createProduct, showEditProduct, updateProduct}=require('../controllers/productController.js')
-
-const Producto=require('../models/Product.js');
+const {showProducts, showProductById,createProduct, showEditProduct, updateProduct, deleteProduct}=require('../controllers/productController.js');
 
 router.get('/products', (req , res)=>{showProducts(req,res)});
 
@@ -22,5 +20,7 @@ router.post('/dashboard', (req , res)=>{createProduct(req,res)});
 router.get('/dashboard/:id/edit', (req, res)=>{showEditProduct(req, res)});
 
 router.put('/dashboard/:id', (req , res)=>{updateProduct(req,res)});
+
+router.delete('/dashboard/:id/delete', (req , res)=>{deleteProduct(req,res)});
 
 module.exports={router};
