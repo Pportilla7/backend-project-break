@@ -5,9 +5,8 @@ html(lang="es")
     meta(charset="UTF-8")
     title= title
   body
-    h1= title
-    
     if producto
+      h1= title
       form(action=`/dashboard/${producto._id}` method="PUT")
         div
           label(for="nombre") Nombre:
@@ -38,6 +37,7 @@ html(lang="es")
           input(type="number" id="precio" name="precio" required value=producto.precio)
         button(type="submit") Actualizar artículo
     else
+      h1= title
       form(action="/dashboard" method="POST")
         div
           label(for="nombre") Nombre:
