@@ -30,6 +30,12 @@ html(lang="es")
               img(src=producto.imagen, alt=producto.nombre)
           else
             img(src=producto.imagen, alt=producto.nombre)
+            div
+              form(action=`/dashboard/${producto._id}/edit` method="GET")
+                input(type="hidden" name="_method" value="PUT")
+                button(type="submit") Actualizar artículo
+              a(href=`/dashboard/${producto._id}/delete`)
+                button(type="button") Botón 2
     else
       div.producto
         p

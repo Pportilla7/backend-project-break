@@ -18,8 +18,6 @@ function showNewProduct(req, res){
     res.render('new',{title:'Nuevo producto'});
 }
 
-
-
 async function showProducts(req, res){
     try{
         var Enlace=false;
@@ -27,6 +25,7 @@ async function showProducts(req, res){
             Enlace=true;
         }
         const productos=await Producto.find();
+        console.log(productos)
         res.render('objeto', {productos, conEnlace:Enlace})
     }catch (error) {
         next(error);
@@ -50,12 +49,12 @@ async function showProductById(req ,res){
 
 async function showEditProduct(req ,res){
     try{
+        console.log('Entró en showEditProduct');
         const id=req.params.id;
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).send('ID inválido');
         }
         const producto=await Producto.findById(id);
-        console.log(producto)
         res.render('new', {producto, title:'Edita objeto'})
     }catch (error) {
         next(error);
@@ -78,7 +77,7 @@ async function updateProduct(req, res) {
 
         console.log(productoUpdated);
 
-        res.render('objeto', {productoUpdated, conEnlace: false });
+        res.render('objeto', {producto:productoUpdated, conEnlace: false });
     } catch (error) {
         next(error);
     }
@@ -96,7 +95,7 @@ async function deleteProduct(req, res) {
         const id_obj = new mongoose.Types.ObjectId(id);
         await Producto.findByIdAndDelete(id_obj);
         
-        res.redirect('/dashboard');
+        res.redirect(303, '/dashboard');
     } catch (error) {
         next(error);
     }

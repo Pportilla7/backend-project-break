@@ -8,7 +8,8 @@ html(lang="es")
     include nav.pug
     if producto
       h1= title
-      form(action=`/dashboard/${producto._id}` method="PUT")
+      form(action=`/dashboard/${producto._id}` method="POST")
+        input(type="hidden" name="_method" value="PUT")
         div
           label(for="nombre") Nombre:
           input(type="text" id="nombre" name="nombre" required value=producto.nombre)
