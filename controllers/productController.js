@@ -26,6 +26,7 @@ function showFormulario(req, res){
 
 async function showProducts(req, res){
     try{
+        console.log(req.query);
         console.log('Estoy en showProducts desde ', req.path);
         var Enlace=false;
         if(req.path==='/products'){
