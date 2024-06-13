@@ -3,6 +3,8 @@ const app = express();
 
 const path = require('path'); 
 
+const session=require('express-session');
+
 const {router}=require('./routes/productRoutes.js');
 
 const {dbConnection}=require('./config/db.js')
@@ -23,11 +25,17 @@ app.set('views', './view');
 
 dbConnection();
 
+app.use(session({
+    secret:process.env.secret,
+    resave:false,
+    saveUnitialized:true,
+    cookie:{secure:false}
+}))
+
 app.use('/', router);
 
 app.use(errorHandler);
 
 app.listen(process.env.port, ()=>{
     console.log(`Servidor escuchando en el puerto ${process.env.port}`);
-    
 })

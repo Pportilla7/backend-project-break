@@ -15,17 +15,23 @@ async function createProduct(req, res){
 }
 
 function showNewProduct(req, res){
-    res.render('new',{title:'Nuevo producto'});
+    res.render('login');
 }
+
+function showFormulario(req, res){
+    res.render('login');
+}
+
+
 
 async function showProducts(req, res){
     try{
+        console.log('Estoy en showProducts desde ', req.path);
         var Enlace=false;
         if(req.path==='/products'){
             Enlace=true;
         }
         const productos=await Producto.find();
-        console.log(productos)
         res.render('objeto', {productos, conEnlace:Enlace})
     }catch (error) {
         next(error);
@@ -102,4 +108,4 @@ async function deleteProduct(req, res) {
 }
 
 
-module.exports = {showProducts, showProductById, createProduct, showEditProduct, updateProduct, deleteProduct, showNewProduct};
+module.exports = {showProducts, showProductById, createProduct, showEditProduct, updateProduct, deleteProduct, showNewProduct, showFormulario};
