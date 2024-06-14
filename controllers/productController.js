@@ -1,74 +1,95 @@
 const Producto=require('../models/Product.js');
 const mongoose = require('mongoose');
-const ObjectId = mongoose.Types.ObjectId;
 
-async function createProduct(req, res){
+
+async function createProduct(req, res, next){
     try{
         const producto = req.body;
         const producto_mongoose=new Producto(producto);
         await producto_mongoose.save();
-        res.redirect(`/dashboard/${producto_mongoose._id}`);
+        res.redirect(`/dashboard`);
     }
     catch (error) {
         next(error);
     }
 }
 
-function showNewProduct(req, res){
+function showNewProduct(req, res, next){
+    res.render('new', {title:'Nuevo producto'});
+}
+
+function showFormulario(req, res, next){
     res.render('login');
 }
 
-function showFormulario(req, res){
-    res.render('login');
-}
-
-
-
-async function showProducts(req, res){
-    try{
-        console.log(req.query);
+async function showProducts(req, res, next) {
+    try {
         console.log('Estoy en showProducts desde ', req.path);
-        var Enlace=false;
-        if(req.path==='/products'){
-            Enlace=true;
+
+        const categoriaFiltro = req.query.categoria;
+        console.log(categoriaFiltro)
+        let productos_query;
+
+        if (categoriaFiltro) {
+            console.log('dentro del if porque hay categoria')
+            productos_query = await Producto.find({ categoria: categoriaFiltro });
+            console.log(productos_query);
+        } else {
+            productos_query = await Producto.find();
         }
-        const productos=await Producto.find();
-        res.render('objeto', {productos, conEnlace:Enlace})
-    }catch (error) {
+
+        var Enlace = (req.path === '/products');
+        var sesionIniciada=(req.path === '/login');
+
+        var cantidadProductos = productos_query.length;
+        console.log(cantidadProductos)
+        var conjuntoBooleano = (cantidadProductos > 1);
+
+        console.log(conjuntoBooleano);
+
+        res.render('objeto', { productos: productos_query, conEnlace: Enlace, cantidad: cantidadProductos, conjunto: conjuntoBooleano, sesion:sesionIniciada });
+    } catch (error) {
         next(error);
     }
 }
-
-async function showProductById(req ,res){
+async function showProductById(req ,res, next){
     try{
         console.log('Entró en showProductById');
         const id=req.params.id;
+
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).send('ID inválido');
         }
-        const id_obj=new ObjectId(id);
+
+        const id_obj=new mongoose.Types.ObjectId(id);
         const producto=await Producto.findById(id_obj);
-        res.render('objeto', {producto, conEnlace:false})
+
+        const isDashboardRoute = req.originalUrl.includes('/dashboard');
+
+        var sesionIniciada=(req.path === '/login');
+        console.log(producto);
+        res.render('objeto', { productos: producto, conEnlace: false, cantidad: 1, conjunto: false, sesion:sesionIniciada, isDashboardRoute });
     }catch (error) {
         next(error);
     }
 }
 
-async function showEditProduct(req ,res){
+async function showEditProduct(req ,res, next){
     try{
         console.log('Entró en showEditProduct');
         const id=req.params.id;
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).send('ID inválido');
         }
-        const producto=await Producto.findById(id);
+        const id_obj=new mongoose.Types.ObjectId(id);
+        const producto=await Producto.findById(id_obj);
         res.render('new', {producto, title:'Edita objeto'})
     }catch (error) {
         next(error);
     }
 }
 
-async function updateProduct(req, res) {
+async function updateProduct(req, res, next) {
     try {
         console.log('Entró en updateProduct');
         const id = req.params.id;
@@ -84,13 +105,13 @@ async function updateProduct(req, res) {
 
         console.log(productoUpdated);
 
-        res.render('objeto', {producto:productoUpdated, conEnlace: false });
+        res.redirect(303, '/dashboard');
     } catch (error) {
         next(error);
     }
 }
 
-async function deleteProduct(req, res) {
+async function deleteProduct(req, res, next) {
     try {
         console.log('Entro en deleteProduct');
         const id = req.params.id;

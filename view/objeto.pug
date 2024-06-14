@@ -1,60 +1,63 @@
 //- objeto.pug
 doctype html
 html(lang="es")
-  head
-    meta(charset="UTF-8")
-    title Productos
-    link(rel="stylesheet" href="./public/styles.css")
+  include head.pug
   body
     include nav.pug
-    if Array.isArray(productos)
-      each producto in productos
-        div.producto
+
+    if cantidad === 0
+      p No hay productos disponibles.
+    if cantidad === 1
+      .productos
           p
             strong Referencia:
-            |  #{producto._id}
+            | #{productos._id}
           p
             strong Descripción:
-            |  #{producto.descripcion}
+            | #{productos.descripcion}
           p
             strong Categoría:
-            |  #{producto.categoria}
+            | #{productos.categoria}
           p
             strong Precio:
-            |  #{producto.precio}
+            | #{productos.precio}
           p
             strong Tamaño:
-            |  #{producto.talla}
+            | #{productos.talla}
+          img(src=productos.imagen, alt=productos.nombre)
+          if isDashboardRoute
+            img(src=productos.imagen, alt=productos.nombre)
+            div
+              form(action=`/dashboard/${productos._id}/edit`, method="GET")
+                button(type="submit") Actualizar artículo
+              form(action=`/dashboard/${productos._id}/delete?_method=DELETE`, method="POST")
+                button(type="submit") Eliminar artículo        
+    else 
+      each producto in productos
+        .producto
+          p
+            strong Referencia:
+            | #{producto._id}
+          p
+            strong Descripción:
+            | #{producto.descripcion}
+          p
+            strong Categoría:
+            | #{producto.categoria}
+          p
+            strong Precio:
+            | #{producto.precio}
+          p
+            strong Tamaño:
+            | #{producto.talla}
           if conEnlace
             a(href=`/products/${producto._id}`)
               img(src=producto.imagen, alt=producto.nombre)
           else
             img(src=producto.imagen, alt=producto.nombre)
             div
-              form(action=`/dashboard/${producto._id}/edit` method="GET")
-                input(type="hidden" name="_method" value="PUT")
+              form(action=`/dashboard/${producto._id}/edit`, method="GET")
                 button(type="submit") Actualizar artículo
-              a(href=`/dashboard/${producto._id}/delete`)
-                button(type="button") Botón 2
-    else
-      div.producto
-        p
-          strong Referencia:
-          |  #{producto._id}
-        p
-          strong Descripción:
-          |  #{producto.descripcion}
-        p
-          strong Categoría:
-          |  #{producto.categoria}
-        p
-          strong Precio:
-          |  #{producto.precio}
-        p
-          strong Tamaño:
-          |  #{producto.talla}
-        if conEnlace
-          a(href=`/products/${producto._id}`)
-            img(src=producto.imagen, alt=producto.nombre)
-        else
-          img(src=producto.imagen, alt=producto.nombre)
+              form(action=`/dashboard/${producto._id}/delete?_method=DELETE`, method="POST")
+                button(type="submit") Eliminar artículo
+    

@@ -1,9 +1,10 @@
 // Import the functions you need from the SDKs you need
 const { initializeApp } = require('firebase/app');
 const { getAuth, signInWithEmailAndPassword } = require('firebase/auth');
+require('dotenv').config();
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBNivY32THUf6huYt9fGrylwXAf-HwvQW4",
+  apiKey: process.env.apiKey,
   authDomain: "ejercicio-tiendaropa.firebaseapp.com",
   projectId: "ejercicio-tiendaropa",
   storageBucket: "ejercicio-tiendaropa.appspot.com",

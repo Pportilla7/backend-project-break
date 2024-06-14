@@ -1,12 +1,13 @@
 const { auth, signInWithEmailAndPassword } = require('../config/firebase');
 
-async function authUsuario(req, res) {
+async function authUsuario(req, res, next) {
     const { email, password } = req.body;
     console.log(email, password);
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-        res.redirect('/dashboard');
+        req.session.user = userCredential.user; 
+        console.log(req.session.user)
+        next(); 
     } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -15,4 +16,14 @@ async function authUsuario(req, res) {
     }
 }
 
-module.exports = { authUsuario };
+function checkAuth(req, res, next) {
+    console.log(req.session.user, 'esto es dentro del checkAuth');
+    if (req.session.user) {
+        console.log('Hay una session ya')
+        next();
+    } else {
+      res.redirect('/login'); 
+    }
+  }
+
+module.exports = { authUsuario, checkAuth };
