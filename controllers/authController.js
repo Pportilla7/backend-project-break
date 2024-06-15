@@ -24,6 +24,16 @@ function checkAuth(req, res, next) {
     } else {
       res.redirect('/login'); 
     }
-  }
+}
 
-module.exports = { authUsuario, checkAuth };
+function logOut(req, res){
+    req.session.destroy((error)=>{
+        if(error){
+            console.error(`Error: ${errorCode}, Message: ${errorMessage}`);
+        }else{
+            res.redirect('/products');
+        }
+    })
+}
+
+module.exports = { authUsuario, checkAuth, logOut };

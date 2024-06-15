@@ -10,5 +10,9 @@ nav
       a(href="/products?categoria=Zapatos") Zapatos
     li
       a(href="/products?categoria=Accesorios") Accesorios
-    li
-      a(href="/login") Iniciar sesion
+    if sesionActiva
+      li
+        a(href="/logout") Cerrar sesión
+    else
+      li
+        a(href="/login") Iniciar sesión

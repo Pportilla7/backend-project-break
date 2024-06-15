@@ -15,7 +15,8 @@ async function createProduct(req, res, next){
 }
 
 function showNewProduct(req, res, next){
-    res.render('new', {title:'Nuevo producto'});
+    const sesionActivaContr = sesionActiva(req);
+    res.render('new', {title:'Nuevo producto', sesionActiva:sesionActivaContr});
 }
 
 function showFormulario(req, res, next){
@@ -24,6 +25,8 @@ function showFormulario(req, res, next){
 
 async function showProducts(req, res, next) {
     try {
+        const sesionActivaContr = sesionActiva(req);
+
         console.log('Estoy en showProducts desde ', req.path);
 
         const categoriaFiltro = req.query.categoria;
@@ -43,17 +46,19 @@ async function showProducts(req, res, next) {
 
         var cantidadProductos = productos_query.length;
         console.log(cantidadProductos)
-        var conjuntoBooleano = (cantidadProductos > 1);
 
+        var conjuntoBooleano = (cantidadProductos > 1);
         console.log(conjuntoBooleano);
 
-        res.render('objeto', { productos: productos_query, conEnlace: Enlace, cantidad: cantidadProductos, conjunto: conjuntoBooleano, sesion:sesionIniciada });
+        res.render('objeto', { productos: productos_query, conEnlace: Enlace, cantidad: cantidadProductos, noEsArray:false , sesion:sesionIniciada, sesionActiva:sesionActivaContr });
     } catch (error) {
         next(error);
     }
 }
 async function showProductById(req ,res, next){
     try{
+        const sesionActivaContr = sesionActiva(req);
+
         console.log('Entró en showProductById');
         const id=req.params.id;
 
@@ -68,7 +73,7 @@ async function showProductById(req ,res, next){
 
         var sesionIniciada=(req.path === '/login');
         console.log(producto);
-        res.render('objeto', { productos: producto, conEnlace: false, cantidad: 1, conjunto: false, sesion:sesionIniciada, isDashboardRoute });
+        res.render('objeto', { productos: producto, conEnlace: false, cantidad: 1, noEsArray: true, sesion:sesionIniciada, isDashboardRoute, sesionActiva:sesionActivaContr });
     }catch (error) {
         next(error);
     }
@@ -76,14 +81,15 @@ async function showProductById(req ,res, next){
 
 async function showEditProduct(req ,res, next){
     try{
-        console.log('Entró en showEditProduct');
+        const sesionActivaContr = sesionActiva(req);
+        
         const id=req.params.id;
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).send('ID inválido');
         }
         const id_obj=new mongoose.Types.ObjectId(id);
         const producto=await Producto.findById(id_obj);
-        res.render('new', {producto, title:'Edita objeto'})
+        res.render('new', {producto, title:'Edita objeto', sesionActiva:sesionActivaContr})
     }catch (error) {
         next(error);
     }
@@ -91,7 +97,6 @@ async function showEditProduct(req ,res, next){
 
 async function updateProduct(req, res, next) {
     try {
-        console.log('Entró en updateProduct');
         const id = req.params.id;
 
         const producto = req.body;
@@ -113,7 +118,6 @@ async function updateProduct(req, res, next) {
 
 async function deleteProduct(req, res, next) {
     try {
-        console.log('Entro en deleteProduct');
         const id = req.params.id;
 
         if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -126,6 +130,14 @@ async function deleteProduct(req, res, next) {
         res.redirect(303, '/dashboard');
     } catch (error) {
         next(error);
+    }
+}
+
+function sesionActiva(req){
+    if(req.session.user){
+        return true;
+    }else{
+        return false;
     }
 }
 

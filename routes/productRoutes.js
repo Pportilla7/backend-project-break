@@ -2,7 +2,7 @@ const express= require('express');
 const router=express.Router();
 
 const {showProducts, showProductById,createProduct, showEditProduct, updateProduct, deleteProduct, showNewProduct, showFormulario}=require('../controllers/productController.js');
-const {authUsuario, checkAuth}=require('../controllers/authController.js');
+const {authUsuario, checkAuth, logOut}=require('../controllers/authController.js');
 
 router.get('/products', showProducts);
 
@@ -25,6 +25,8 @@ router.delete('/dashboard/:id/delete', checkAuth, deleteProduct);
 router.get('/login', showFormulario);
 
 router.post('/login', authUsuario, showProducts);
+
+router.get('/logout', logOut);
 
 module.exports={router};
 

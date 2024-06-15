@@ -7,31 +7,31 @@ html(lang="es")
 
     if cantidad === 0
       p No hay productos disponibles.
-    if cantidad === 1
+    if noEsArray
       .productos
-          p
-            strong Referencia:
-            | #{productos._id}
-          p
-            strong Descripción:
-            | #{productos.descripcion}
-          p
-            strong Categoría:
-            | #{productos.categoria}
-          p
-            strong Precio:
-            | #{productos.precio}
-          p
-            strong Tamaño:
-            | #{productos.talla}
+        p
+          strong Referencia:
+          | #{productos._id}
+        p
+          strong Descripción:
+          | #{productos.descripcion}
+        p
+          strong Categoría:
+          | #{productos.categoria}
+        p
+          strong Precio:
+          | #{productos.precio}
+        p
+          strong Tamaño:
+          | #{productos.talla}
+        img(src=productos.imagen, alt=productos.nombre)
+        if isDashboardRoute
           img(src=productos.imagen, alt=productos.nombre)
-          if isDashboardRoute
-            img(src=productos.imagen, alt=productos.nombre)
-            div
-              form(action=`/dashboard/${productos._id}/edit`, method="GET")
-                button(type="submit") Actualizar artículo
-              form(action=`/dashboard/${productos._id}/delete?_method=DELETE`, method="POST")
-                button(type="submit") Eliminar artículo        
+          div
+            form(action=`/dashboard/${productos._id}/edit`, method="GET")
+              button(type="submit") Actualizar artículo
+            form(action=`/dashboard/${productos._id}/delete?_method=DELETE`, method="POST")
+              button(type="submit") Eliminar artículo        
     else 
       each producto in productos
         .producto
